@@ -2984,6 +2984,17 @@ pass, the listener is skipped and no request is sent to the server at all.
 This makes conditional listeners ideal for filtering out events that would
 otherwise trigger an unnecessary re-render.
 
+Jexl supports comparisons (``==``, ``!=``, ``>``, ``<``, ``>=``, ``<=``),
+boolean logic (``&&``, ``||``, ``!``), and dotted property access, so
+conditions can be as simple or as elaborate as you need::
+
+    // only refresh if the event is about *this* product AND it was just published
+    #[LiveListener('product_updated(event.id == props.product && event.status == "published")')]
+    public function refreshProduct()
+    {
+        // ...
+    }
+
 Two variables are available in the expression:
 
 * ``event``: the data that was passed when the event was emitted (e.g. via
@@ -2995,6 +3006,11 @@ Two variables are available in the expression:
 If the condition itself is invalid (e.g. a typo), it's treated as ``false``
 - the listener is skipped and an error is logged to the browser console -
 rather than accidentally calling the action on every event.
+
+.. note::
+
+    Jexl is bundled directly into the LiveComponent JavaScript - there is
+    nothing extra to install or add to your importmap to use conditions.
 
 .. _`Jexl`: https://github.com/TomFrost/Jexl
 

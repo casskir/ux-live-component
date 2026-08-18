@@ -1,5 +1,9 @@
 # CHANGELOG
 
+## 3.2
+
+- Add support for conditional expressions in `#[LiveListener]` event names (e.g. `#[LiveListener('productUpdated(event.id == props.product)')]`), evaluated on the client via `jexl` so a non-matching event never triggers an Ajax call
+
 ## 3.1
 
 - Fix dynamic template resolution when using the `loading` attribute on a deferred component
